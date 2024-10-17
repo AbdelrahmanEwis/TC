@@ -6,13 +6,9 @@ from odoo import api, fields, models
 class SaleOrderLine(models.Model):
     _inherit = 'sale.order.line'
 
-
     @api.depends('product_id', 'product_uom', 'product_uom_qty')
     def _compute_price_unit(self):
-        print('jJJJ', self._origin)
         for line in self:
-            print('jJJJ', line)
-            print('jJJJ', line.order_id.pricelist_id)
             # check if the products have purchase bill it will return the last purchase price
             # elif the products doesnt have purchase bill it will return the cost
             # else it will trigger the default odoo function
