@@ -1,0 +1,30 @@
+<odoo>
+    <record id="res_partner_access_log_view" model="ir.ui.view">
+        <field name="name">res partner access log view inherit</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook//page[@name='sales_purchases']//field[@name='user_id']" position="after">
+                <field name="user_ids" invisible="1"/>
+                <field name="team_ids" invisible="1"/>
+            </xpath>
+            <xpath expr="//notebook//page[@name='sales_purchases']//field[@name='user_id']" position="attributes">
+                <attribute name="domain">
+                    [('id','in',user_ids)]
+                </attribute>
+            </xpath>
+        </field>
+    </record>
+    <record id="res_partner_view_team" model="ir.ui.view">
+        <field name="name">res partner view team inherit</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="sales_team.res_partner_view_team"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='sales_purchases']//field[@name='team_id'][last()]" position="attributes">
+                <attribute name="domain">
+                    [('id', 'in',team_ids)]
+                </attribute>
+            </xpath>
+        </field>
+    </record>
+</odoo>

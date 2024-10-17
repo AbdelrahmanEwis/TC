@@ -1,0 +1,39 @@
+<odoo>
+
+    <record id="customer_payment" model="ir.ui.view">
+        <field name="name">customer payment</field>
+        <field name="model">customer.payment</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="partner_id" required="1"/>
+                        <field name="date" required="1"/>
+                    </group>
+                    <footer>
+                        <button string="Confirm" type="object" name="action_confirm" class="btn-primary"/>
+                        <button string="Cancel" special="cancel" class="btn-secondary"/>
+                    </footer>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+
+    <record id="customer_payment_action" model="ir.actions.act_window">
+        <field name="name">Customer Payment</field>
+        <field name="res_model">customer.payment</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+
+    <menuitem id="sale_order_report_menu"
+              parent="sale.menu_sale_report"
+              name="Customer Payment"
+              action="customer_payment_action"
+              sequence="9"
+    />
+
+
+</odoo>
