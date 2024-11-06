@@ -1,0 +1,32 @@
+<odoo>
+    <data>
+        <template id="report_invoice_document" inherit_id="account.report_invoice_document">
+            <xpath expr="//div[@id='total']" position="after">
+                <t t-if="docs[0]._name == 'account.move'">
+                    <table class="table table-bordered table-striped">
+                        <tbody>
+                            <tr>
+                                <th style="background-color:#8FE6EB; text-align: left">Previous Balance</th>
+                                <td style="text-align: right; border: 1px solid #8FE6EB;"
+                                    t-esc="o.previous_balance"
+                                    t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                            </tr>
+                            <tr>
+                                <th style="background-color:#8FE6EB; text-align: left">Payment Paid</th>
+                                <td style="text-align: right; border: 1px solid #8FE6EB;"
+                                    t-esc="o.payment_paid"
+                                    t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                            </tr>
+                            <tr>
+                                <th style="background-color:#8FE6EB; text-align: left">Current Balance</th>
+                                <td style="text-align: right; border: 1px solid #8FE6EB;"
+                                    t-esc="o.current_balance"
+                                    t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                            </tr>
+                        </tbody>
+                    </table>
+                </t>
+            </xpath>
+        </template>
+    </data>
+</odoo>

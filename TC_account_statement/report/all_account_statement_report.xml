@@ -1,0 +1,126 @@
+<odoo>
+
+    <record id="all_account_statement_report" model="ir.actions.report">
+        <field name="name">كشف حساب مجمع</field>
+        <field name="model">sale.order.report</field>
+        <field name="binding_model_id" ref="model_sale_order_report"/>
+        <field name="binding_type">report</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">TC_account_statement.all_account_statement_template</field>
+    </record>
+
+    <template id="all_account_statement_template">
+        <t t-call="web.html_container">
+            <t t-call="web.internal_layout">
+                <style>
+                    @import url(https://fonts.googleapis.com/earlyaccess/droidarabicnaskh.css);
+                    table {
+                    width: 100%;
+                    border-collapse: collapse;
+                    font-family:'Droid Arabic Naskh';
+                    }
+
+                    th, td {
+                    padding: 8px;
+                    text-align: left;
+                    border-bottom: 1px solid #ddd;
+                    }
+
+                    th {
+                    background-color: #6f706e;
+                    color: #fcfcfc;
+                    }
+
+                    .highlight {
+                    background-color: #e6f7ff;
+                    }
+                </style>
+                <div class="page" dir="rtl">
+                    <h3 style="color: #fcfcfc; font-family:'Droid Arabic Naskh'; padding-right: 310px; background-color: #6f706e; border-bottom: 2px solid #020202; height: 40px;">
+                        كشف حساب مجمع
+                    </h3>
+                    <div style="margin-bottom: 20px; border">
+                        <span>اسم العميل :</span>
+                        <strong t-field="docs[0].partner_id"/>
+                    </div>
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>المسلسل</th>
+                                <th>التاريخ</th>
+                                <th>عدد القطع</th>
+                                <th>الاجمالي</th>
+                                <th>المدفوع</th>
+                                <th>الرصيد</th>
+                                <th>ملاحظات</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-set="row_number" t-value="1"/>
+                            <t t-set="total_income" t-value="0"/>
+                            <t t-set="total_outgoing" t-value="0"/>
+                            <t t-set="total_balance" t-value="0"/>
+                            <t t-foreach="docs" t-as="o">
+                                <tr>
+                                    <td>
+                                        <span t-esc="row_number"/>
+                                    </td>
+                                    <td>
+                                        <span t-esc="o.date.strftime('%d/%m/%Y')" />
+                                    </td>
+                                    <td>
+                                        <span t-field="o.item_count"/>
+                                    </td>
+                                    <td>
+                                        <span t-field="o.income"/>
+                                    </td>
+                                    <td>
+                                        <span t-field="o.outgoing"/>
+                                    </td>
+                                    <td>
+                                        <span t-field="o.balance"/>
+                                    </td>
+                                    <td>
+                                        <span t-field="o.ref"/>
+                                    </td>
+                                </tr>
+                                <t t-set="row_number" t-value="row_number + 1"/>
+                                <t t-set="total_income" t-value="total_income + o.income"/>
+                                <t t-set="total_outgoing"
+                                   t-value="total_outgoing + o.outgoing"/>
+                                <t t-set="total_balance" t-value="total_balance + o.balance"/>
+
+                            </t>
+                        </tbody>
+                        <tfoot>
+                            <thead>
+                                <tr>
+                                    <th colspan="3"></th>
+                                    <th>المبلغ</th>
+                                    <th>المحصل</th>
+                                    <th>الباقي</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tr>
+                                <td colspan="3"></td>
+                                <td>
+                                    <span t-esc="round(total_income, 2)"/>
+                                </td>
+                                <td>
+                                    <span t-esc="round(total_outgoing,2)"/>
+                                </td>
+                                <td>
+                                    <span t-esc="round(total_balance,2)"/>
+                                </td>
+                                <td></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </t>
+
+        </t>
+    </template>
+
+</odoo>

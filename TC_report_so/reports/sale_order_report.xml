@@ -1,0 +1,34 @@
+<odoo>
+    <data>
+        <template id="report_saleorder_document" inherit_id="sale.report_saleorder_document">
+            <xpath expr="//div[@class='clearfix']" position="after">
+                <div style="margin-left: 420px; padding-top:30px">
+                    <t t-if="docs[0]._name == 'sale.order'">
+                        <table class="table table-bordered table-striped">
+                            <tbody>
+                                <tr>
+                                    <th style="background-color:#8FE6EB; text-align: left">Previous Balance</th>
+                                    <td style="text-align: right; border: 1px solid #8FE6EB;"
+                                        t-esc="doc.previous_balance"
+                                        t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
+                                </tr>
+                                <tr>
+                                    <th style="background-color:#8FE6EB; text-align: left">Payment Paid</th>
+                                    <td style="text-align: right; border: 1px solid #8FE6EB;"
+                                        t-esc="doc.payment_paid"
+                                        t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
+                                </tr>
+                                <tr>
+                                    <th style="background-color:#8FE6EB; text-align: left">Current Balance</th>
+                                    <td style="text-align: right; border: 1px solid #8FE6EB;"
+                                        t-esc="doc.current_balance"
+                                        t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </t>
+                </div>
+            </xpath>
+        </template>
+    </data>
+</odoo>
